@@ -3,19 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="RentAll - Your one-stop rental platform for rooms, vehicles, tools, and more. Find affordable rentals near you.">
   <title>RentAll - Your One Stop Rental Hub</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
       --primary: #2563eb;
       --primary-light: #3b82f6;
       --primary-dark: #1d4ed8;
+      --secondary: #e11d48;
+      --secondary-light: #f43f5e;
       --text: #1f2937;
       --text-light: #6b7280;
       --bg: #f8fafc;
       --white: #ffffff;
+      --gray-light: #f3f4f6;
       --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
       --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
       --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
@@ -51,6 +56,26 @@
       z-index: 1000;
     }
 
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-icon {
+      font-size: 1.8rem;
+      color: var(--primary);
+    }
+
     header h1 {
       font-size: 1.5rem;
       font-weight: 700;
@@ -58,23 +83,109 @@
       letter-spacing: -0.5px;
     }
 
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 24px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    nav a:hover {
+      color: var(--primary);
+    }
+
+    .nav-icon {
+      font-size: 0.9rem;
+    }
+
+    .user-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .user-actions a {
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    .login-btn {
+      color: var(--text);
+      transition: var(--transition);
+    }
+
+    .login-btn:hover {
+      color: var(--primary);
+    }
+
+    .signup-btn {
+      background: var(--primary);
+      color: var(--white);
+      padding: 8px 16px;
+      border-radius: var(--radius-md);
+      transition: var(--transition);
+    }
+
+    .signup-btn:hover {
+      background: var(--primary-dark);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--text);
+      cursor: pointer;
+    }
+
     .search-container {
-      padding: 16px 5%;
+      padding: 24px 5%;
+      background: linear-gradient(135deg, var(--primary-light), var(--primary-dark));
+    }
+
+    .search-box-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .search-header {
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+
+    .search-header h2 {
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+    }
+
+    .search-header p {
+      opacity: 0.9;
     }
 
     .search-box {
       width: 100%;
-      max-width: 600px;
-      margin: 0 auto;
       display: flex;
-      box-shadow: var(--shadow-md);
+      box-shadow: var(--shadow-lg);
       border-radius: var(--radius-md);
       overflow: hidden;
+      background: var(--white);
     }
 
     .search-box input {
       flex: 1;
-      padding: 14px 16px;
+      padding: 16px 20px;
       border: none;
       font-size: 1rem;
       outline: none;
@@ -83,38 +194,64 @@
     .search-box button {
       background: var(--primary);
       color: var(--white);
-      padding: 0 20px;
+      padding: 0 24px;
       border: none;
       font-weight: 500;
       cursor: pointer;
       transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .search-box button:hover {
       background: var(--primary-dark);
     }
 
-    .categories {
-      padding: 16px 5%;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    .search-filters {
+      display: flex;
       gap: 12px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+
+    .search-filter {
+      background: rgba(255,255,255,0.2);
+      color: var(--white);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .search-filter:hover {
+      background: rgba(255,255,255,0.3);
+    }
+
+    .categories {
+      padding: 32px 5%;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 16px;
+      max-width: 1400px;
+      margin: 0 auto;
     }
 
     @media (min-width: 768px) {
       .categories {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-        gap: 16px;
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
       }
     }
 
     .category-card {
       background: var(--white);
-      padding: 20px 12px;
+      padding: 24px 12px;
       text-align: center;
       border-radius: var(--radius-md);
       box-shadow: var(--shadow-sm);
       transition: var(--transition);
+      cursor: pointer;
     }
 
     .category-card:hover {
@@ -129,13 +266,13 @@
     }
 
     .category-icon {
-      font-size: 28px;
-      margin-bottom: 8px;
+      font-size: 32px;
+      margin-bottom: 12px;
       color: var(--primary);
     }
 
     .category-card div:last-child {
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       font-weight: 500;
       color: var(--text);
     }
@@ -143,19 +280,40 @@
     .cta {
       text-align: center;
       padding: 24px 5%;
+      background: var(--white);
+    }
+
+    .cta-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .cta h2 {
+      font-size: 1.8rem;
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+
+    .cta p {
+      color: var(--text-light);
+      margin-bottom: 24px;
+      font-size: 1.05rem;
     }
 
     .btn {
       background: var(--primary);
       color: var(--white);
       border: none;
-      padding: 12px 24px;
+      padding: 12px 28px;
       font-size: 1rem;
       font-weight: 500;
       border-radius: var(--radius-md);
       cursor: pointer;
       transition: var(--transition);
       box-shadow: var(--shadow-sm);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .btn:hover {
@@ -174,23 +332,61 @@
       background: rgba(37, 99, 235, 0.1);
     }
 
+    .btn-secondary {
+      background: var(--secondary);
+    }
+
+    .btn-secondary:hover {
+      background: var(--secondary-light);
+    }
+
     .section {
-      padding: 32px 5%;
+      padding: 40px 5%;
       background: var(--white);
       margin-top: 24px;
     }
 
+    .section-container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
     .section-title {
-      font-size: 1.25rem;
+      font-size: 1.5rem;
       font-weight: 600;
+      color: var(--text);
+    }
+
+    .section-link {
       color: var(--primary);
-      margin-bottom: 16px;
+      text-decoration: none;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .section-link:hover {
+      text-decoration: underline;
     }
 
     .sponsored-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 24px;
+    }
+
+    @media (max-width: 768px) {
+      .sponsored-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      }
     }
 
     @media (max-width: 480px) {
@@ -205,6 +401,7 @@
       overflow: hidden;
       box-shadow: var(--shadow-sm);
       transition: var(--transition);
+      border: 1px solid rgba(0,0,0,0.05);
     }
 
     .sponsored-card:hover {
@@ -212,160 +409,884 @@
       box-shadow: var(--shadow-md);
     }
 
-    .sponsored-card img {
+    .sponsored-card-img {
       width: 100%;
-      height: 120px;
+      height: 160px;
       object-fit: cover;
+      display: block;
     }
 
     .sponsored-card-content {
-      padding: 12px;
+      padding: 16px;
     }
 
     .sponsored-card strong {
       display: block;
-      font-size: 0.9rem;
-      margin-bottom: 4px;
+      font-size: 1rem;
+      margin-bottom: 6px;
+      line-height: 1.3;
     }
 
     .sponsored-card p {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      margin-bottom: 12px;
+    }
+
+    .sponsored-card-price {
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    .sponsored-card-location {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.85rem;
+      color: var(--text-light);
+      margin-top: 8px;
+    }
+
+    .location-icon {
+      color: var(--secondary);
+      font-size: 0.9rem;
+    }
+
+    .rating {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 8px;
+    }
+
+    .rating-stars {
+      color: #f59e0b;
+      font-size: 0.9rem;
+    }
+
+    .rating-count {
       font-size: 0.8rem;
       color: var(--text-light);
     }
 
     .info-section {
       text-align: center;
-      padding: 40px 5%;
+      padding: 60px 5%;
+      background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+    }
+
+    .info-container {
+      max-width: 800px;
+      margin: 0 auto;
     }
 
     .info-section h2 {
-      font-size: 1.5rem;
-      font-weight: 600;
-      color: var(--primary);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text);
       margin-bottom: 16px;
     }
 
     .info-section p {
-      font-size: 1rem;
+      font-size: 1.1rem;
       color: var(--text-light);
+      margin-bottom: 16px;
+      line-height: 1.6;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 32px;
+      padding: 60px 5%;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .feature-card {
+      text-align: center;
+      padding: 32px 24px;
+      background: var(--white);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .feature-icon {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 16px;
+    }
+
+    .feature-card h3 {
+      font-size: 1.25rem;
       margin-bottom: 12px;
+      color: var(--text);
+    }
+
+    .feature-card p {
+      color: var(--text-light);
+      font-size: 0.95rem;
+    }
+
+    .testimonials {
+      padding: 60px 5%;
+      background: var(--gray-light);
+      text-align: center;
+    }
+
+    .testimonials h2 {
+      font-size: 2rem;
+      margin-bottom: 40px;
+      color: var(--text);
+    }
+
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .testimonial-card {
+      background: var(--white);
+      padding: 24px;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      text-align: left;
+    }
+
+    .testimonial-text {
+      font-style: italic;
+      margin-bottom: 16px;
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .author-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .author-info h4 {
+      font-size: 1rem;
+      margin-bottom: 4px;
+    }
+
+    .author-info p {
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+
+    .newsletter {
+      padding: 60px 5%;
+      text-align: center;
+      background: var(--primary);
+      color: var(--white);
+    }
+
+    .newsletter-container {
       max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
+      margin: 0 auto;
+    }
+
+    .newsletter h2 {
+      font-size: 2rem;
+      margin-bottom: 16px;
+    }
+
+    .newsletter p {
+      margin-bottom: 24px;
+      opacity: 0.9;
+    }
+
+    .newsletter-form {
+      display: flex;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .newsletter-form input {
+      flex: 1;
+      padding: 14px 16px;
+      border: none;
+      border-radius: var(--radius-md) 0 0 var(--radius-md);
+      font-size: 1rem;
+      outline: none;
+    }
+
+    .newsletter-form button {
+      background: var(--secondary);
+      color: var(--white);
+      padding: 0 20px;
+      border: none;
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .newsletter-form button:hover {
+      background: var(--secondary-light);
     }
 
     footer {
-      padding: 24px 5%;
-      text-align: center;
-      background-color: var(--white);
-      color: var(--text-light);
+      padding: 60px 5% 24px;
+      background-color: var(--text);
+      color: var(--white);
       font-size: 0.9rem;
-      margin-top: 40px;
-      box-shadow: 0 -1px 3px rgba(0,0,0,0.05);
     }
+
+    .footer-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .footer-logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-logo-icon {
+      color: var(--primary-light);
+    }
+
+    .footer-about p {
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 16px;
+      line-height: 1.6;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 16px;
+    }
+
+    .social-link {
+      color: var(--white);
+      background: rgba(255,255,255,0.1);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .social-link:hover {
+      background: var(--primary);
+    }
+
+    .footer-links h3 {
+      font-size: 1.1rem;
+      margin-bottom: 16px;
+      color: var(--white);
+    }
+
+    .footer-links ul {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 12px;
+    }
+
+    .footer-links a {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .footer-links a:hover {
+      color: var(--white);
+      text-decoration: underline;
+    }
+
+    .footer-contact p {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      color: rgba(255,255,255,0.7);
+    }
+
+    .footer-contact i {
+      width: 20px;
+      text-align: center;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.7);
+    }
+
+    .footer-bottom a {
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    .footer-bottom a:hover {
+      text-decoration: underline;
+    }
+
+    /* Mobile menu styles */
+    @media (max-width: 768px) {
+      nav {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 80%;
+        height: 100vh;
+        background: var(--white);
+        box-shadow: var(--shadow-lg);
+        z-index: 1001;
+        transition: var(--transition);
+        padding: 24px;
+      }
+
+      nav.active {
+        left: 0;
+      }
+
+      nav ul {
+        flex-direction: column;
+        gap: 16px;
+        margin-top: 40px;
+      }
+
+      .mobile-menu-btn {
+        display: block;
+        z-index: 1002;
+      }
+
+      .user-actions {
+        display: none;
+      }
+
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        z-index: 1000;
+        opacity: 0;
+        pointer-events: none;
+        transition: var(--transition);
+      }
+
+      .overlay.active {
+        opacity: 1;
+        pointer-events: all;
+      }
+    }
+
+    /* Animation */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .animate-fadein {
+      animation: fadeIn 0.6s ease-out forwards;
+    }
+
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+    .delay-4 { animation-delay: 0.4s; }
   </style>
 </head>
 <body>
+  <div class="overlay"></div>
   <header>
-    <h1>RentAll</h1>
+    <div class="header-container">
+      <div class="logo-container">
+        <i class="fas fa-home logo-icon"></i>
+        <h1>RentAll</h1>
+      </div>
+      
+      <nav>
+        <ul>
+          <li><a href="#"><i class="fas fa-home nav-icon"></i> Home</a></li>
+          <li><a href="room.html"><i class="fas fa-search nav-icon"></i> Explore</a></li>
+          <li><a href="room.html"><i class="fas fa-heart nav-icon"></i> Saved</a></li>
+          <li><a href=""><i class="fas fa-bell nav-icon"></i> Notifications</a></li>
+          <li><a href="#"><i class="fas fa-user nav-icon"></i> Profile</a></li>
+        </ul>
+      </nav>
+      
+      <div class="user-actions">
+        <a href="#" class="login-btn">Log In</a>
+        <a href="#" class="signup-btn">Sign Up</a>
+      </div>
+      
+      <button class="mobile-menu-btn">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
   </header>
 
   <div class="search-container">
-    <div class="search-box">
-      <input type="text" placeholder="Search cars, tools, services...">
-      <button>Search</button>
+    <div class="search-box-container">
+      <div class="search-header">
+        <h2>Find the perfect rental</h2>
+        <p>Discover affordable rooms, vehicles, tools and more in your area</p>
+      </div>
+      
+      <div class="search-box">
+        <input type="text" placeholder="Search by location, item, or category...">
+        <button>
+          <i class="fas fa-search"></i>
+          Search
+        </button>
+      </div>
+      
+      <div class="search-filters">
+        <div class="search-filter">Rooms</div>
+        <div class="search-filter">Vehicles</div>
+        <div class="search-filter">Tools</div>
+        <div class="search-filter">Electronics</div>
+        <div class="search-filter">Furniture</div>
+      </div>
     </div>
   </div>
 
-  
   <div class="categories">
-     <div class="category-card">
-      <a href="rooms.html">
-        <div class="category-icon">🏠</div>
+    <div class="category-card animate-fadein delay-1">
+      <a href="room.html">
+        <div class="category-icon"><i class="fas fa-bed"></i></div>
         <div>Rooms</div>
       </a>
     </div>
-    <div class="category-card">
+    <div class="category-card animate-fadein delay-2">
       <a href="vehicles.html">
-        <div class="category-icon">🚗</div>
+        <div class="category-icon"><i class="fas fa-car"></i></div>
         <div>Vehicles</div>
       </a>
     </div>
-    <div class="category-card">
-      <a href="tools.html">
-        <div class="category-icon">🛠️</div>
+    <div class="category-card animate-fadein delay-3">
+      <a href="coming.html">
+        <div class="category-icon"><i class="fas fa-tools"></i></div>
         <div>Tools</div>
       </a>
     </div>
-    <div class="category-card">
-      <a href="electronics.html">
-        <div class="category-icon">🎥</div>
+    <div class="category-card animate-fadein delay-4">
+      <a href="coming.html">
+        <div class="category-icon"><i class="fas fa-tv"></i></div>
         <div>Electronics</div>
       </a>
     </div>
-    <div class="category-card">
-      <a href="clothing.html">
-        <div class="category-icon">👕</div>
+    <div class="category-card animate-fadein delay-1">
+      <a href="coming.html">
+        <div class="category-icon"><i class="fas fa-tshirt"></i></div>
         <div>Clothing</div>
       </a>
     </div>
-    <div class="category-card">
-      <a href="event-gear.html">
-        <div class="category-icon">🏕️</div>
+    <div class="category-card animate-fadein delay-2">
+      <a href="coming.html">
+        <div class="category-icon"><i class="fas fa-campground"></i></div>
         <div>Event Gear</div>
+      </a>
+    </div>
+    <div class="category-card animate-fadein delay-3">
+      <a href="coming.html">
+        <div class="category-icon"><i class="fas fa-couch"></i></div>
+        <div>Furniture</div>
+      </a>
+    </div>
+    <div class="category-card animate-fadein delay-4">
+      <a href="coming.html">
+        <div class="category-icon"><i class="fas fa-basketball-ball"></i></div>
+        <div>Sports</div>
       </a>
     </div>
   </div>
 
   <div class="cta">
-    <button class="btn">List Your Product</button>
+    <div class="cta-container">
+      <h2>Have something to rent out?</h2>
+      <p>Join thousands of hosts who are earning extra income by renting out their unused items and spaces.</p>
+      <button class="btn">
+        <i class="fas fa-plus"></i>
+        List Your Product
+      </button>
+    </div>
   </div>
 
   <div class="section">
-    <h2 class="section-title">Sponsored Products Near You</h2>
-    <div class="sponsored-grid">
-      <div class="sponsored-card">
-        <img src="https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg" alt="Hostel">
-        <div class="sponsored-card-content">
-          <strong>City Hostel Room</strong>
-          <p>₹1200/month · Dimapur</p>
+    <div class="section-container">
+      <div class="section-header">
+        <h2 class="section-title">Popular Rentals Near You</h2>
+        <a href="#" class="section-link">
+          See all
+          <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+      
+      <div class="sponsored-grid">
+        <div class="sponsored-card">
+          <img src="https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg" alt="Hostel" class="sponsored-card-img">
+          <div class="sponsored-card-content">
+            <strong>Cozy Private Room Near University</strong>
+            <p class="sponsored-card-price">₹1200/month</p>
+            <div class="sponsored-card-location">
+              <i class="fas fa-map-marker-alt location-icon"></i>
+              Dimapur, Nagaland
+            </div>
+            <div class="rating">
+              <div class="rating-stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+              </div>
+              <div class="rating-count">(42)</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="sponsored-card">
+          <img src="https://images.pexels.com/photos/1484981/pexels-photo-1484981.jpeg" alt="Drill Machine" class="sponsored-card-img">
+          <div class="sponsored-card-content">
+            <strong>Premium Home Stay with Kitchen</strong>
+            <p class="sponsored-card-price">₹150/day</p>
+            <div class="sponsored-card-location">
+              <i class="fas fa-map-marker-alt location-icon"></i>
+              Chumukedima, Nagaland
+            </div>
+            <div class="rating">
+              <div class="rating-stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="far fa-star"></i>
+              </div>
+              <div class="rating-count">(28)</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="sponsored-card">
+          <img src="https://images.pexels.com/photos/2393831/pexels-photo-2393831.jpeg" alt="Scooter" class="sponsored-card-img">
+          <div class="sponsored-card-content">
+            <strong>Honda Activa Scooter - 2022 Model</strong>
+            <p class="sponsored-card-price">₹300/day</p>
+            <div class="sponsored-card-location">
+              <i class="fas fa-map-marker-alt location-icon"></i>
+              Kohima, Nagaland
+            </div>
+            <div class="rating">
+              <div class="rating-stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </div>
+              <div class="rating-count">(65)</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="sponsored-card">
+          <img src="https://images.pexels.com/photos/244206/pexels-photo-244206.jpeg" alt="Camera" class="sponsored-card-img">
+          <div class="sponsored-card-content">
+            <strong>Canon EOS 200D DSLR Camera with Lens</strong>
+            <p class="sponsored-card-price">₹800/day</p>
+            <div class="sponsored-card-location">
+              <i class="fas fa-map-marker-alt location-icon"></i>
+              Imphal, Manipur
+            </div>
+            <div class="rating">
+              <div class="rating-stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="far fa-star"></i>
+              </div>
+              <div class="rating-count">(37)</div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="sponsored-card">
-        <img src="https://images.pexels.com/photos/1484981/pexels-photo-1484981.jpeg" alt="Drill Machine">
-        <div class="sponsored-card-content">
-          <strong>Rose Home Stay</strong>
-          <p>₹150/day · Chumukedima</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-container">
+      <div class="section-header">
+        <h2 class="section-title">Recently Added</h2>
+        <a href="#" class="section-link">
+          See all
+          <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+      
+      <div class="sponsored-grid">
+        <div class="sponsored-card">
+          <img src="https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg" alt="Furnished Room" class="sponsored-card-img">
+          <div class="sponsored-card-content">
+            <strong>Fully Furnished Room for Students</strong>
+            <p class="sponsored-card-price">₹1000/month</p>
+            <div class="sponsored-card-location">
+              <i class="fas fa-map-marker-alt location-icon"></i>
+              Dimapur, Nagaland
+            </div>
+          </div>
+        </div>
+        
+        <div class="sponsored-card">
+          <img src="https://images.pexels.com/photos/248526/pexels-photo-248526.jpeg" alt="Power Tools" class="sponsored-card-img">
+          <div class="sponsored-card-content">
+            <strong>Power Drill & Tool Kit Set</strong>
+            <p class="sponsored-card-price">₹200/day</p>
+            <div class="sponsored-card-location">
+              <i class="fas fa-map-marker-alt location-icon"></i>
+              Kohima, Nagaland
+            </div>
+          </div>
+        </div>
+        
+        <div class="sponsored-card">
+          <img src="https://images.pexels.com/photos/112460/pexels-photo-112460.jpeg" alt="Party Tent" class="sponsored-card-img">
+          <div class="sponsored-card-content">
+            <strong>Large Party Tent with Chairs</strong>
+            <p class="sponsored-card-price">₹1500/day</p>
+            <div class="sponsored-card-location">
+              <i class="fas fa-map-marker-alt location-icon"></i>
+              Imphal, Manipur
+            </div>
+          </div>
+        </div>
+        
+        <div class="sponsored-card">
+          <img src="https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg" alt="Wedding Dress" class="sponsored-card-img">
+          <div class="sponsored-card-content">
+            <strong>Designer Wedding Dress - Size M</strong>
+            <p class="sponsored-card-price">₹500/day</p>
+            <div class="sponsored-card-location">
+              <i class="fas fa-map-marker-alt location-icon"></i>
+              Dimapur, Nagaland
+            </div>
+          </div>
         </div>
       </div>
-      <div class="sponsored-card">
-        <img src="https://images.pexels.com/photos/2393831/pexels-photo-2393831.jpeg" alt="Scooter">
-        <div class="sponsored-card-content">
-          <strong>Activa Scooter</strong>
-          <p>₹300/day · Kohima</p>
+    </div>
+  </div>
+
+  <div class="features">
+    <div class="feature-card">
+      <div class="feature-icon">
+        <i class="fas fa-shield-alt"></i>
+      </div>
+      <h3>Secure Payments</h3>
+      <p>All transactions are protected with industry-standard encryption and secure payment gateways.</p>
+    </div>
+    
+    <div class="feature-card">
+      <div class="feature-icon">
+        <i class="fas fa-user-check"></i>
+      </div>
+      <h3>Verified Users</h3>
+      <p>We verify all users to ensure a safe and trustworthy rental community.</p>
+    </div>
+    
+    <div class="feature-card">
+      <div class="feature-icon">
+        <i class="fas fa-headset"></i>
+      </div>
+      <h3>24/7 Support</h3>
+      <p>Our customer support team is available round the clock to assist you with any issues.</p>
+    </div>
+  </div>
+
+  <div class="testimonials">
+    <h2>What Our Users Say</h2>
+    
+    <div class="testimonial-grid">
+      <div class="testimonial-card">
+        <div class="testimonial-text">
+          "Found a perfect room near my college through RentAll. The process was so easy and the host was very helpful. Saved me so much time and hassle!"
+        </div>
+        <div class="testimonial-author">
+          <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Sarah K." class="author-avatar">
+          <div class="author-info">
+            <h4>Sarah K.</h4>
+            <p>Student, Dimapur</p>
+          </div>
         </div>
       </div>
-      <div class="sponsored-card">
-        <img src="https://images.pexels.com/photos/244206/pexels-photo-244206.jpeg" alt="Camera">
-        <div class="sponsored-card-content">
-          <strong>Canon DSLR</strong>
-          <p>₹800/day · Imphal</p>
+      
+      <div class="testimonial-card">
+        <div class="testimonial-text">
+          "I've been renting out my spare room and it's been a great source of extra income. The platform is easy to use and I've met some wonderful people."
+        </div>
+        <div class="testimonial-author">
+          <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Rajiv M." class="author-avatar">
+          <div class="author-info">
+            <h4>Rajiv M.</h4>
+            <p>Host, Kohima</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="testimonial-card">
+        <div class="testimonial-text">
+          "Needed a camera for a weekend project and found one on RentAll for half the price of buying. The owner was professional and the camera was in perfect condition."
+        </div>
+        <div class="testimonial-author">
+          <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Priya T." class="author-avatar">
+          <div class="author-info">
+            <h4>Priya T.</h4>
+            <p>Photographer, Imphal</p>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
   <div class="info-section">
-    <h2>Find Your Perfect Stay</h2>
-    <p>Looking for a room near your college, workplace, or school?</p>
-    <p>Contact us — we'll arrange it for you. Sit back and relax!</p>
-    <div class="cta">
-      <button class="btn btn-outline">Contact Us</button>
+    <div class="info-container">
+      <h2>Find Your Perfect Stay</h2>
+      <p>Looking for a room near your college, workplace, or school? We specialize in helping students and professionals find affordable, comfortable accommodations.</p>
+      <p>Contact us — we'll arrange it for you. Sit back and relax!</p>
+      <div class="cta">
+        <button class="btn btn-secondary">
+          <i class="fas fa-phone-alt"></i>
+          Contact Us
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="newsletter">
+    <div class="newsletter-container">
+      <h2>Stay Updated</h2>
+      <p>Subscribe to our newsletter for the latest rental deals and tips</p>
+      
+      <form class="newsletter-form">
+        <input type="email" placeholder="Enter your email address">
+        <button type="submit">
+          Subscribe
+        </button>
+      </form>
     </div>
   </div>
 
   <footer>
-    &copy; 2025 RentAll | Built for Local & Smart Access
+    <div class="footer-container">
+      <div class="footer-about">
+        <div class="footer-logo">
+          <i class="fas fa-home footer-logo-icon"></i>
+          RentAll
+        </div>
+        <p>Your one-stop platform for all rental needs. Connecting people with quality rentals since 2023.</p>
+        
+        <div class="social-links">
+          <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+      
+      <div class="footer-links">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Listings</a></li>
+          <li><a href="#">How It Works</a></li>
+          <li><a href="#">Blog</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-links">
+        <h3>Categories</h3>
+        <ul>
+          <li><a href="#">Rooms</a></li>
+          <li><a href="#">Vehicles</a></li>
+          <li><a href="#">Tools</a></li>
+          <li><a href="#">Electronics</a></li>
+          <li><a href="#">Event Gear</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-contact">
+        <h3>Contact Us</h3>
+        <p><i class="fas fa-map-marker-alt"></i> Dimapur, Nagaland, India</p>
+        <p><i class="fas fa-phone-alt"></i> +91 9876543210</p>
+        <p><i class="fas fa-envelope"></i> hello@rentall.com</p>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>&copy; 2025 RentAll. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    </div>
   </footer>
+
+  <script>
+    // Mobile menu toggle
+    const menuBtn = document.querySelector('.mobile-menu-btn');
+    const nav = document.querySelector('nav');
+    const overlay = document.querySelector('.overlay');
+    
+    menuBtn.addEventListener('click', () => {
+      nav.classList.toggle('active');
+      overlay.classList.toggle('active');
+      menuBtn.innerHTML = nav.classList.contains('active') 
+        ? '<i class="fas fa-times"></i>' 
+        : '<i class="fas fa-bars"></i>';
+    });
+    
+    overlay.addEventListener('click', () => {
+      nav.classList.remove('active');
+      overlay.classList.remove('active');
+      menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+    });
+    
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+  </script>
 </body>
 </html>
