@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shared Boys Hostel | RentAll</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-light: #3b82f6;
+      --primary-dark: #1d4ed8;
+      --text: #1f2937;
+      --text-light: #6b7280;
+      --bg: #f8fafc;
+      --white: #ffffff;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+      --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+      --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --transition: all 0.2s ease-in-out;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    header {
+      background-color: var(--white);
+      padding: 16px 5%;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .back-btn {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    header h1 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .room-detail-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px 5%;
+    }
+
+    .room-gallery {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .main-image {
+      grid-column: span 3;
+      height: 400px;
+      object-fit: cover;
+      border-radius: var(--radius-md);
+      width: 100%;
+    }
+
+    .thumbnail-container {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .thumbnail {
+      height: calc((400px - 30px) / 3);
+      object-fit: cover;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .thumbnail:hover {
+      transform: scale(1.02);
+      box-shadow: var(--shadow-md);
+    }
+
+    .room-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+    }
+
+    .room-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .room-location {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-light);
+      margin-bottom: 12px;
+    }
+
+    .room-price {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .price-period {
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--text-light);
+    }
+
+    .room-highlights {
+      display: flex;
+      gap: 16px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .highlight {
+      background: var(--white);
+      padding: 12px 16px;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .room-content {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 30px;
+      margin-top: 30px;
+    }
+
+    .room-description {
+      background: var(--white);
+      padding: 24px;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+
+    .description-text {
+      color: var(--text);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .amenities-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .amenity-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .owner-card {
+      background: var(--white);
+      padding: 24px;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      position: sticky;
+      top: 100px;
+    }
+
+    .owner-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .owner-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .owner-name {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .owner-role {
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+
+    .contact-btn {
+      background: var(--primary);
+      color: var(--white);
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: var(--radius-md);
+      font-weight: 500;
+      font-size: 1rem;
+      margin-top: 20px;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .contact-btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+
+    .rules-list {
+      margin-top: 20px;
+    }
+
+    .rule-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .map-container {
+      height: 300px;
+      background: #eee;
+      border-radius: var(--radius-md);
+      margin-top: 30px;
+      overflow: hidden;
+    }
+
+    .similar-rooms {
+      margin-top: 60px;
+    }
+
+    .similar-rooms-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .similar-room-card {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .similar-room-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .similar-room-content {
+      padding: 16px;
+    }
+
+    .similar-room-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .similar-room-price {
+      font-weight: 600;
+      color: var(--primary);
+      margin-top: 8px;
+    }
+
+    .roommate-info {
+      margin-top: 20px;
+      background: var(--white);
+      padding: 20px;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .roommate-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+      margin-top: 15px;
+    }
+
+    .roommate-card {
+      padding: 15px;
+      border: 1px solid #e5e7eb;
+      border-radius: var(--radius-md);
+    }
+
+    footer {
+      padding: 24px 5%;
+      text-align: center;
+      background-color: var(--white);
+      color: var(--text-light);
+      font-size: 0.9rem;
+      margin-top: 60px;
+      box-shadow: 0 -1px 3px rgba(0,0,0,0.05);
+    }
+
+    @media (max-width: 768px) {
+      .room-gallery {
+        grid-template-columns: 1fr;
+      }
+      
+      .main-image {
+        grid-column: span 1;
+        height: 300px;
+      }
+      
+      .thumbnail-container {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      
+      .thumbnail {
+        height: 100px;
+      }
+      
+      .room-content {
+        grid-template-columns: 1fr;
+      }
+      
+      .features-grid, .amenities-list {
+        grid-template-columns: 1fr;
+      }
+      
+      .owner-card {
+        position: static;
+        margin-top: 30px;
+      }
+      
+      .roommate-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>RentAll</h1>
+    <div style="width: 60px;"></div> <!-- Spacer for alignment -->
+  </header>
+
+  <div class="room-detail-container">
+    <!-- Room Gallery -->
+    <div class="room-gallery">
+      <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Shared Boys Hostel" class="main-image" id="mainImage">
+      <div class="thumbnail-container">
+        <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Shared Room Kitchen" class="thumbnail" onclick="changeMainImage(this.src)">
+
+        <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Shared Room" class="thumbnail" onclick="changeMainImage(this.src)">
+        <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Shared Room Kitchen" class="thumbnail" onclick="changeMainImage(this.src)">
+       
+        <!-- <img src="https://images.unsplash.com/photo-1583845112203-29329902330e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Shared Room Bathroom" class="thumbnail" onclick="changeMainImage(this.src)"> -->
+      </div>
+    </div>
+
+    <!-- Room Header -->
+    <div class="room-header">
+      <div>
+        <h1 class="room-title">Shared Boys Hostel</h1>
+        <p class="room-location">📍 Midland, Dimapur - 797112</p>
+      </div>
+      <div>
+        <span class="room-price">₹4,500</span>
+        <span class="price-period">/month</span>
+      </div>
+    </div>
+
+    <!-- Room Highlights -->
+    <div class="room-highlights">
+      <div class="highlight">
+        <span>🛏️</span>
+        <span>2 Beds</span>
+      </div>
+      <div class="highlight">
+        <span>👨‍🎓</span>
+        <span>Students Preferred</span>
+      </div>
+      <div class="highlight">
+        <span>🍳</span>
+        <span>Common Kitchen</span>
+      </div>
+      <div class="highlight">
+        <span>🔐</span>
+        <span>24/7 Security</span>
+      </div>
+    </div>
+
+    <!-- Room Content -->
+    <div class="room-content">
+      <div class="room-details">
+        <!-- Description -->
+        <div class="room-description">
+          <h3 class="section-title">Description</h3>
+          <p class="description-text">
+            This well-maintained shared boys hostel is ideal for students looking for affordable accommodation in Midland area. The room has two comfortable beds with storage space, a study table, and shared bathroom facilities. The hostel has a common kitchen where residents can prepare their meals, and a dining area for communal eating.
+          </p>
+          <p class="description-text">
+            The property is located in a quiet neighborhood but still close to markets and public transportation. The hostel has 24/7 security, CCTV surveillance, and a warden living on premises. Water supply is consistent with backup storage, and power backup is available for common areas.
+          </p>
+        </div>
+
+        <!-- Features -->
+        <div class="room-description" style="margin-top: 20px;">
+          <h3 class="section-title">Room Features</h3>
+          <div class="features-grid">
+            <div class="feature-item">
+              <span>🛏️</span>
+              <span>2 Single Beds</span>
+            </div>
+            <div class="feature-item">
+              <span>🚽</span>
+              <span>Shared Bathroom (2:1 ratio)</span>
+            </div>
+            <div class="feature-item">
+              <span>🍳</span>
+              <span>Common Kitchen</span>
+            </div>
+            <div class="feature-item">
+              <span>📚</span>
+              <span>Study Table</span>
+            </div>
+            <div class="feature-item">
+              <span>💧</span>
+              <span>24/7 Water</span>
+            </div>
+            <div class="feature-item">
+              <span>🔌</span>
+              <span>Power Backup</span>
+            </div>
+            <div class="feature-item">
+              <span>🧺</span>
+              <span>Laundry Area</span>
+            </div>
+            <div class="feature-item">
+              <span>📺</span>
+              <span>Common TV</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Roommate Information -->
+        <div class="room-description" style="margin-top: 20px;">
+          <h3 class="section-title">Current Roommates</h3>
+          <p class="description-text">
+            This room currently has 1 occupant looking for 1 more roommate. Here's some information about the current resident:
+          </p>
+          <div class="roommate-grid">
+            <div class="roommate-card">
+              <p><strong>Name:</strong> Rajesh Kumar</p>
+              <p><strong>Age:</strong> 21</p>
+              <p><strong>Occupation:</strong> B.Com Student</p>
+              <p><strong>Habits:</strong> Non-smoker, Early riser</p>
+              <p><strong>Interests:</strong> Cricket, Reading</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Amenities -->
+        <div class="room-description" style="margin-top: 20px;">
+          <h3 class="section-title">Hostel Amenities</h3>
+          <div class="amenities-list">
+            <div class="amenity-item">
+              <span>✔️</span>
+              <span>24/7 Security & Warden</span>
+            </div>
+            <div class="amenity-item">
+              <span>✔️</span>
+              <span>CCTV Surveillance</span>
+            </div>
+            <div class="amenity-item">
+              <span>✔️</span>
+              <span>Common Kitchen</span>
+            </div>
+            <div class="amenity-item">
+              <span>✔️</span>
+              <span>Dining Hall</span>
+            </div>
+            <div class="amenity-item">
+              <span>✔️</span>
+              <span>Water Purifier</span>
+            </div>
+            <div class="amenity-item">
+              <span>✔️</span>
+              <span>Wi-Fi Available</span>
+            </div>
+            <div class="amenity-item">
+              <span>✔️</span>
+              <span>Common TV</span>
+            </div>
+            <div class="amenity-item">
+              <span>✔️</span>
+              <span>Bicycle Parking</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- House Rules -->
+        <div class="room-description" style="margin-top: 20px;">
+          <h3 class="section-title">Hostel Rules</h3>
+          <div class="rules-list">
+            <div class="rule-item">
+              <span>✅</span>
+              <span>No smoking or alcohol allowed</span>
+            </div>
+            <div class="rule-item">
+              <span>✅</span>
+              <span>No outside guests after 8 PM</span>
+            </div>
+            <div class="rule-item">
+              <span>✅</span>
+              <span>Lights out by 11 PM on weekdays</span>
+            </div>
+            <div class="rule-item">
+              <span>✅</span>
+              <span>Kitchen cleaning rotation</span>
+            </div>
+            <div class="rule-item">
+              <span>✅</span>
+              <span>1 month security deposit</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Location -->
+        <div class="room-description" style="margin-top: 20px;">
+          <h3 class="section-title">Location</h3>
+          <p class="description-text">
+            The hostel is conveniently located in Midland, close to educational institutions and markets:
+          </p>
+          <ul style="margin: 12px 0 20px 20px; color: var(--text);">
+            <li style="margin-bottom: 8px;">🚶‍♂️ 10 min walk to Dimapur Government College</li>
+            <li style="margin-bottom: 8px;">🚗 5 min drive to Midland Market</li>
+            <li style="margin-bottom: 8px;">🏫 15 min drive to Tetso College</li>
+            <li style="margin-bottom: 8px;">🛒 7 min walk to local grocery stores</li>
+          </ul>
+          <div class="map-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3586.244038002543!2d93.72278331502838!3d25.90058398356987!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3745a5f5f70e2e4d%3A0x1e3a9c7f8f7b3b1c!2sMidland%2C%20Dimapur%2C%20Nagaland%20797112!5e0!3m2!1sen!2sin!4v1620000000000!5m2!1sen!2sin" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+          </div>
+        </div>
+      </div>
+
+      <!-- Owner Card -->
+      <div class="owner-card">
+        <div class="owner-header">
+          <img src="https://randomuser.me/api/portraits/men/65.jpg" alt="Owner" class="owner-avatar">
+          <div>
+            <h3 class="owner-name">Mr. Singh</h3>
+            <p class="owner-role">Hostel Warden</p>
+          </div>
+        </div>
+        <div class="owner-info">
+          <p style="color: var(--text); margin-bottom: 8px;">📞 +91 98765 43210</p>
+          <p style="color: var(--text-light); font-size: 0.9rem;">Verified ✔️</p>
+          <p style="color: var(--text-light); font-size: 0.9rem; margin-top: 8px;">Responds within 2 hours</p>
+        </div>
+        <button class="contact-btn" onclick="contactOwner()">
+          📞 Contact Warden
+        </button>
+        <button class="contact-btn" style="background: #10b981; margin-top: 10px;" onclick="scheduleVisit()">
+          📅 Schedule Visit
+        </button>
+        <div style="margin-top: 20px; text-align: center;">
+          <p style="color: var(--text-light); font-size: 0.9rem;">Listed 5 days ago</p>
+          <p style="color: var(--text-light); font-size: 0.9rem; margin-top: 4px;">Viewed 86 times</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Similar Rooms -->
+    <div class="similar-rooms">
+      <h3 class="section-title">Similar Shared Rooms in Midland</h3>
+      <div class="similar-rooms-grid">
+        <!-- Similar Room 1 -->
+        <div class="similar-room-card">
+          <img src="https://images.unsplash.com/photo-1554469384-e58fac16e23a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Budget Room" class="similar-room-image">
+          <div class="similar-room-content">
+            <h4 class="similar-room-title">Shared Boys Room</h4>
+            <p class="room-location">📍 Midland, Dimapur</p>
+            <div class="room-features" style="margin: 12px 0;">
+              <span style="font-size: 0.8rem;">🛏️ 3 Beds</span>
+              <span style="font-size: 0.8rem;">🍳 Kitchen</span>
+            </div>
+            <p class="similar-room-price">₹3,800 <span class="price-period">/month</span></p>
+          </div>
+        </div>
+
+        <!-- Similar Room 2 -->
+        <div class="similar-room-card">
+          <img src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Shared Room" class="similar-room-image">
+          <div class="similar-room-content">
+            <h4 class="similar-room-title">Student Hostel</h4>
+            <p class="room-location">📍 Midland, Dimapur</p>
+            <div class="room-features" style="margin: 12px 0;">
+              <span style="font-size: 0.8rem;">🛏️ 2 Beds</span>
+              <span style="font-size: 0.8rem;">📚 Study Room</span>
+            </div>
+            <p class="similar-room-price">₹4,200 <span class="price-period">/month</span></p>
+          </div>
+        </div>
+
+        <!-- Similar Room 3 -->
+        <div class="similar-room-card">
+          <img src="https://images.unsplash.com/photo-1554469384-e58fac16e23a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Budget Room" class="similar-room-image">
+          <div class="similar-room-content">
+            <h4 class="similar-room-title">Premium Shared Room</h4>
+            <p class="room-location">📍 Midland, Dimapur</p>
+            <div class="room-features" style="margin: 12px 0;">
+              <span style="font-size: 0.8rem;">🛏️ 2 Beds</span>
+              <span style="font-size: 0.8rem;">🚽 Attached</span>
+            </div>
+            <p class="similar-room-price">₹5,500 <span class="price-period">/month</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 RentAll | Built for Local & Smart Access
+  </footer>
+
+  <script>
+    // Change main image when thumbnail is clicked
+    function changeMainImage(src) {
+      document.getElementById('mainImage').src = src;
+    }
+
+    // Contact owner function
+    function contactOwner() {
+      alert('Connecting you with the hostel warden... You can call on +91 98765 43210');
+    }
+
+    // Schedule visit function
+    function scheduleVisit() {
+      const date = prompt('Enter preferred date for visit (e.g., 15 July 2025)');
+      const time = prompt('Enter preferred time (e.g., 11:00 AM)');
+      
+      if (date && time) {
+        alert(`Visit scheduled for ${date} at ${time}. Warden will confirm shortly.`);
+      }
+    }
+  </script>
+</body>
+</html>

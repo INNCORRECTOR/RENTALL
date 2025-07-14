@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rooms for Rent | RentAll</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-light: #3b82f6;
+      --primary-dark: #1d4ed8;
+      --text: #1f2937;
+      --text-light: #6b7280;
+      --bg: #f8fafc;
+      --white: #ffffff;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+      --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+      --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --transition: all 0.2s ease-in-out;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    header {
+      background-color: var(--white);
+      padding: 16px 5%;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .back-btn {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    header h1 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .search-container {
+      padding: 16px 5%;
+      background: var(--white);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .search-box {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      display: flex;
+      box-shadow: var(--shadow-md);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+
+    .search-box input {
+      flex: 1;
+      padding: 12px 16px;
+      border: none;
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    .search-box button {
+      background: var(--primary);
+      color: var(--white);
+      padding: 0 16px;
+      border: none;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .search-box button:hover {
+      background: var(--primary-dark);
+    }
+
+    .filter-bar {
+      padding: 12px 5%;
+      background: var(--white);
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .filter-bar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .filter-btn {
+      background: var(--bg);
+      color: var(--text);
+      border: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .filter-btn.active {
+      background: var(--primary);
+      color: var(--white);
+    }
+
+    .room-list {
+      padding: 16px 5%;
+    }
+
+    .room-card {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      margin-bottom: 20px;
+      display: none; /* Initially hidden, shown based on filter */
+    }
+
+    .room-card.visible {
+      display: block;
+    }
+
+    .room-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .room-content {
+      padding: 16px;
+    }
+
+    .room-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .room-location {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .room-features {
+      display: flex;
+      gap: 16px;
+      margin: 12px 0;
+    }
+
+    .feature {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.85rem;
+    }
+
+    .room-price {
+      font-weight: 600;
+      color: var(--primary);
+      margin-top: 8px;
+    }
+
+    .price-period {
+      font-weight: 400;
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+
+    .btn {
+      background: var(--primary);
+      color: var(--white);
+      border: none;
+      padding: 10px 16px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: var(--transition);
+      width: 100%;
+      margin-top: 12px;
+    }
+
+    .btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+
+    .no-results {
+      text-align: center;
+      padding: 40px 0;
+      color: var(--text-light);
+      display: none;
+    }
+
+    footer {
+      padding: 24px 5%;
+      text-align: center;
+      background-color: var(--white);
+      color: var(--text-light);
+      font-size: 0.9rem;
+      margin-top: 40px;
+      box-shadow: 0 -1px 3px rgba(0,0,0,0.05);
+    }
+
+    @media (min-width: 768px) {
+      .room-list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .room-list {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Rooms for Rent</h1>
+    <div style="width: 60px;"></div> <!-- Spacer for alignment -->
+  </header>
+
+  <div class="search-container">
+    <div class="search-box">
+      <input type="text" placeholder="Search by location, price..." id="searchInput">
+      <button onclick="searchRooms()">Search</button>
+    </div>
+  </div>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterRooms('all')">All</button>
+    <button class="filter-btn" onclick="filterRooms('single')">Single</button>
+    <button class="filter-btn" onclick="filterRooms('shared')">Shared</button>
+    <button class="filter-btn" onclick="filterRooms('hostel')">Hostel</button>
+    <button class="filter-btn" onclick="filterRooms('pg')">PG</button>
+    <button class="filter-btn" onclick="filterRooms('budget')">Under ₹5000</button>
+    <button class="filter-btn" onclick="filterRooms('college')">Near College</button>
+    <button class="filter-btn" onclick="filterRooms('ac')">AC</button>
+  </div>
+
+  <div class="room-list" id="roomList">
+    <!-- Room 1 - Single -->
+    <div class="room-card visible" data-type="single" data-price="8500" data-location="civil lines" data-features="single,attached">
+      <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Modern Apartment" class="room-image">
+      <div class="room-content">
+        <h3 class="room-title">Modern Studio Apartment</h3>
+        <p class="room-location">📍 Civil Lines, Dimapur</p>
+        <div class="room-features">
+          <span class="feature">🛏️ Single</span>
+          <span class="feature">🚽 Attached</span>
+          <span class="feature">📏 250 sq.ft</span>
+        </div>
+        <p class="room-price">₹8,500 <span class="price-period">/month</span></p>
+        <a href="firstlist.html"><button class="btn">View Details</button></a>
+      </div>
+    </div>
+
+    <!-- Room 2 - Shared -->
+    <div class="room-card visible" data-type="shared" data-price="4500" data-location="midland" data-features="shared,kitchen">
+      <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Shared Room" class="room-image">
+      <div class="room-content">
+        <h3 class="room-title">Shared Boys Hostel</h3>
+        <p class="room-location">📍 Midland, Dimapur</p>
+        <div class="room-features">
+          <span class="feature">🛏️ 2 Beds</span>
+          <span class="feature">🚽 Shared</span>
+          <span class="feature">🍳 Kitchen</span>
+        </div>
+        <p class="room-price">₹4,500 <span class="price-period">/month</span></p>
+        <a href="second.html"><button class="btn">View Details</button></a>
+      </div>
+    </div>
+
+    <!-- Room 3 - Single AC -->
+    <div class="room-card visible" data-type="single ac" data-price="12000" data-location="duncan bosti" data-features="single,attached,ac">
+      <img src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Luxury Room" class="room-image">
+      <div class="room-content">
+        <h3 class="room-title">Luxury AC Room</h3>
+        <p class="room-location">📍 Duncan Bosti, Dimapur</p>
+        <div class="room-features">
+          <span class="feature">❄️ AC</span>
+          <span class="feature">🚽 Attached</span>
+          <span class="feature">🧺 Laundry</span>
+        </div>
+        <p class="room-price">₹12,000 <span class="price-period">/month</span></p>
+        <button class="btn">View Details</button>
+      </div>
+    </div>
+
+    <!-- Room 4 - PG -->
+    <div class="room-card visible" data-type="pg" data-price="9000" data-location="purana bazar" data-features="pg,food,security">
+      <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Girls PG" class="room-image">
+      <div class="room-content">
+        <h3 class="room-title">Girls PG with Food</h3>
+        <p class="room-location">📍 Purana Bazar, Dimapur</p>
+        <div class="room-features">
+          <span class="feature">👩 Girls Only</span>
+          <span class="feature">🍛 Food Included</span>
+          <span class="feature">🔐 Security</span>
+        </div>
+        <p class="room-price">₹9,000 <span class="price-period">/month</span></p>
+        <button class="btn">View Details</button>
+      </div>
+    </div>
+
+    <!-- Room 5 - Single Budget -->
+    <div class="room-card visible" data-type="single budget" data-price="5500" data-location="new market" data-features="single,shared">
+      <img src="https://images.unsplash.com/photo-1554469384-e58fac16e23a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Budget Room" class="room-image">
+      <div class="room-content">
+        <h3 class="room-title">Budget Single Room</h3>
+        <p class="room-location">📍 New Market, Dimapur</p>
+        <div class="room-features">
+          <span class="feature">🛏️ Single</span>
+          <span class="feature">🚽 Shared</span>
+          <span class="feature">💧 Water 24/7</span>
+        </div>
+        <p class="room-price">₹5,500 <span class="price-period">/month</span></p>
+        <button class="btn">View Details</button>
+      </div>
+    </div>
+
+    <!-- Room 6 - Single -->
+    <div class="room-card visible" data-type="single" data-price="15000" data-location="circular road" data-features="single,furnished,kitchen">
+      <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Furnished Apartment" class="room-image">
+      <div class="room-content">
+        <h3 class="room-title">Furnished 1BHK</h3>
+        <p class="room-location">📍 Circular Road, Dimapur</p>
+        <div class="room-features">
+          <span class="feature">🛋️ Furnished</span>
+          <span class="feature">🍳 Kitchen</span>
+          <span class="feature">📏 400 sq.ft</span>
+        </div>
+        <p class="room-price">₹15,000 <span class="price-period">/month</span></p>
+        <button class="btn">View Details</button>
+      </div>
+    </div>
+
+    <!-- Room 7 - Hostel -->
+    <div class="room-card visible" data-type="hostel college" data-price="7000" data-location="sovima" data-features="hostel,single,attached">
+      <img src="https://images.unsplash.com/photo-1529408632839-a54952c491e5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Near College" class="room-image">
+      <div class="room-content">
+        <h3 class="room-title">Near Tetso College</h3>
+        <p class="room-location">📍 Sovima, Dimapur</p>
+        <div class="room-features">
+          <span class="feature">🏫 5 min walk</span>
+          <span class="feature">🚽 Attached</span>
+          <span class="feature">🛏️ Single</span>
+        </div>
+        <p class="room-price">₹7,000 <span class="price-period">/month</span></p>
+        <button class="btn">View Details</button>
+      </div>
+    </div>
+
+    <!-- Room 8 - Shared -->
+    <div class="room-card visible" data-type="shared" data-price="18000" data-location="burma camp" data-features="shared,family,balcony">
+      <img src="https://images.unsplash.com/photo-1560448204-603b3fc33ddc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Family Room" class="room-image">
+      <div class="room-content">
+        <h3 class="room-title">Family Room with Balcony</h3>
+        <p class="room-location">📍 Burma Camp, Dimapur</p>
+        <div class="room-features">
+          <span class="feature">👨‍👩‍👧 Family</span>
+          <span class="feature">🌿 Balcony</span>
+          <span class="feature">🚽 2 Baths</span>
+        </div>
+        <p class="room-price">₹18,000 <span class="price-period">/month</span></p>
+        <button class="btn">View Details</button>
+      </div>
+    </div>
+
+    <!-- Room 9 - PG -->
+    <div class="room-card visible" data-type="pg" data-price="10500" data-location="hong kong market" data-features="pg,professionals">
+      <img src="https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Working Professional" class="room-image">
+      <div class="room-content">
+        <h3 class="room-title">Executive PG</h3>
+        <p class="room-location">📍 Hong Kong Market, Dimapur</p>
+        <div class="room-features">
+          <span class="feature">💼 Professionals</span>
+          <span class="feature">🧺 Housekeeping</span>
+          <span class="feature">🍛 Food Optional</span>
+        </div>
+        <p class="room-price">₹10,500 <span class="price-period">/month</span></p>
+        <button class="btn">View Details</button>
+      </div>
+    </div>
+
+    <!-- Room 10 - Hostel -->
+    <div class="room-card visible" data-type="hostel" data-price="25000" data-location="airport road" data-features="hostel,premium,ac">
+      <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Luxury Apartment" class="room-image">
+      <div class="room-content">
+        <h3 class="room-title">Luxury Serviced Apartment</h3>
+        <p class="room-location">📍 Airport Road, Dimapur</p>
+        <div class="room-features">
+          <span class="feature">⭐ Premium</span>
+          <span class="feature">🏊 Pool Access</span>
+          <span class="feature">🧑‍🍳 Chef Service</span>
+        </div>
+        <p class="room-price">₹25,000 <span class="price-period">/month</span></p>
+        <button class="btn">View Details</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="no-results" id="noResults">
+    <h3>No rooms match your search criteria</h3>
+    <p>Try adjusting your filters or search terms</p>
+  </div>
+
+  <footer>
+    &copy; 2025 RentAll | Built for Local & Smart Access
+  </footer>
+
+  <script>
+    // Filter rooms based on type
+    function filterRooms(type) {
+      const rooms = document.querySelectorAll('.room-card');
+      const noResults = document.getElementById('noResults');
+      const filterButtons = document.querySelectorAll('.filter-btn');
+      let visibleCount = 0;
+      
+      // Update active filter button
+      filterButtons.forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.textContent.toLowerCase().includes(type) || 
+            (type === 'all' && btn.textContent === 'All')) {
+          btn.classList.add('active');
+        }
+      });
+
+      // Filter rooms
+      rooms.forEach(room => {
+        const roomType = room.getAttribute('data-type');
+        const roomPrice = parseInt(room.getAttribute('data-price'));
+        const roomFeatures = room.getAttribute('data-features');
+        
+        if (type === 'all' || 
+            (type === 'single' && roomType.includes('single')) || 
+            (type === 'shared' && roomType.includes('shared')) || 
+            (type === 'hostel' && roomType.includes('hostel')) || 
+            (type === 'pg' && roomType.includes('pg')) || 
+            (type === 'budget' && roomPrice < 5000) || 
+            (type === 'college' && roomType.includes('college')) || 
+            (type === 'ac' && roomFeatures.includes('ac'))) {
+          room.classList.add('visible');
+          visibleCount++;
+        } else {
+          room.classList.remove('visible');
+        }
+      });
+
+      // Show no results message if needed
+      if (visibleCount === 0) {
+        noResults.style.display = 'block';
+      } else {
+        noResults.style.display = 'none';
+      }
+    }
+
+    // Search rooms function
+    function searchRooms() {
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+      const rooms = document.querySelectorAll('.room-card');
+      const noResults = document.getElementById('noResults');
+      let visibleCount = 0;
+      
+      rooms.forEach(room => {
+        const title = room.querySelector('.room-title').textContent.toLowerCase();
+        const location = room.querySelector('.room-location').textContent.toLowerCase();
+        const price = room.querySelector('.room-price').textContent.toLowerCase();
+        
+        if (title.includes(searchTerm) || 
+            location.includes(searchTerm) || 
+            price.includes(searchTerm)) {
+          room.classList.add('visible');
+          visibleCount++;
+        } else {
+          room.classList.remove('visible');
+        }
+      });
+
+      // Show no results message if needed
+      if (visibleCount === 0) {
+        noResults.style.display = 'block';
+      } else {
+        noResults.style.display = 'none';
+      }
+    }
+
+    // Make search work on Enter key
+    document.getElementById('searchInput').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        searchRooms();
+      }
+    });
+  </script>
+</body>
+</html>
