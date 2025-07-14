@@ -1,26 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>RentAll - Your One Stop Rental Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --primary: #2563eb;
+      --primary-light: #3b82f6;
+      --primary-dark: #1d4ed8;
+      --text: #1f2937;
+      --text-light: #6b7280;
+      --bg: #f8fafc;
+      --white: #ffffff;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+      --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+      --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --transition: all 0.2s ease-in-out;
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
     body {
-      background: #f9f9f9;
-      color: #333;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
     }
 
     header {
-      background-color: #fff;
-      padding: 16px 20px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      background-color: var(--white);
+      padding: 16px 5%;
+      box-shadow: var(--shadow-sm);
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -30,57 +52,74 @@
     }
 
     header h1 {
-      font-size: 24px;
-      color: #007bff;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: -0.5px;
     }
 
     .search-container {
-      margin: 20px;
-      display: flex;
-      justify-content: center;
+      padding: 16px 5%;
     }
 
     .search-box {
       width: 100%;
       max-width: 600px;
+      margin: 0 auto;
       display: flex;
+      box-shadow: var(--shadow-md);
+      border-radius: var(--radius-md);
+      overflow: hidden;
     }
 
     .search-box input {
       flex: 1;
-      padding: 14px;
-      border: 1px solid #ccc;
-      border-radius: 8px 0 0 8px;
-      font-size: 16px;
+      padding: 14px 16px;
+      border: none;
+      font-size: 1rem;
+      outline: none;
     }
 
     .search-box button {
-      background: #007bff;
-      color: white;
-      padding: 14px 20px;
+      background: var(--primary);
+      color: var(--white);
+      padding: 0 20px;
       border: none;
-      border-radius: 0 8px 8px 0;
+      font-weight: 500;
       cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .search-box button:hover {
+      background: var(--primary-dark);
     }
 
     .categories {
-      margin: 20px;
+      padding: 16px 5%;
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 12px;
+    }
+
+    @media (min-width: 768px) {
+      .categories {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 16px;
+      }
     }
 
     .category-card {
-      background: white;
-      padding: 20px;
+      background: var(--white);
+      padding: 20px 12px;
       text-align: center;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      transition: transform 0.2s ease;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
     }
 
     .category-card:hover {
       transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
     }
 
     .category-card a {
@@ -92,73 +131,137 @@
     .category-icon {
       font-size: 28px;
       margin-bottom: 8px;
-      color: #007bff;
+      color: var(--primary);
     }
 
-    .extras {
-      background: #fff;
-      padding: 30px 20px;
-      margin-top: 40px;
-      box-shadow: 0 -1px 10px rgba(0, 0, 0, 0.05);
+    .category-card div:last-child {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text);
     }
 
-    .extras h2 {
-      font-size: 20px;
+    .cta {
+      text-align: center;
+      padding: 24px 5%;
+    }
+
+    .btn {
+      background: var(--primary);
+      color: var(--white);
+      border: none;
+      padding: 12px 24px;
+      font-size: 1rem;
+      font-weight: 500;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--primary);
+      border: 1px solid var(--primary);
+    }
+
+    .btn-outline:hover {
+      background: rgba(37, 99, 235, 0.1);
+    }
+
+    .section {
+      padding: 32px 5%;
+      background: var(--white);
+      margin-top: 24px;
+    }
+
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--primary);
       margin-bottom: 16px;
-      color: #007bff;
-    }
-
-    .extras ul {
-      list-style-type: none;
-    }
-
-    .extras li {
-      margin: 10px 0;
-      padding-left: 20px;
-      position: relative;
-    }
-
-    .extras li::before {
-      content: "✔";
-      position: absolute;
-      left: 0;
-      color: #28a745;
     }
 
     .sponsored-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 16px;
-  margin-top: 16px;
-  max-width: 1100px;
-  margin-left: auto;
-  margin-right: auto;
-}
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 16px;
+    }
 
-.sponsored-card {
-  background: #fff;
-  border-radius: 10px;
-  padding: 12px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-  text-align: center;
-}
+    @media (max-width: 480px) {
+      .sponsored-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
 
-.sponsored-card img {
-  width: 100%;
-  height: 200px; /* increased from default size */
-  object-fit: cover; /* ensures image fills space without stretching */
-  border-radius: 8px;
-  margin-bottom: 8px;
-}
+    .sponsored-card {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+    }
 
+    .sponsored-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
 
+    .sponsored-card img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+    }
+
+    .sponsored-card-content {
+      padding: 12px;
+    }
+
+    .sponsored-card strong {
+      display: block;
+      font-size: 0.9rem;
+      margin-bottom: 4px;
+    }
+
+    .sponsored-card p {
+      font-size: 0.8rem;
+      color: var(--text-light);
+    }
+
+    .info-section {
+      text-align: center;
+      padding: 40px 5%;
+    }
+
+    .info-section h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 16px;
+    }
+
+    .info-section p {
+      font-size: 1rem;
+      color: var(--text-light);
+      margin-bottom: 12px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
 
     footer {
-      margin-top: 40px;
-      padding: 20px;
+      padding: 24px 5%;
       text-align: center;
-      background-color: #f1f1f1;
-      color: #777;
+      background-color: var(--white);
+      color: var(--text-light);
+      font-size: 0.9rem;
+      margin-top: 40px;
+      box-shadow: 0 -1px 3px rgba(0,0,0,0.05);
     }
   </style>
 </head>
@@ -174,7 +277,14 @@
     </div>
   </div>
 
+  
   <div class="categories">
+     <div class="category-card">
+      <a href="rooms.html">
+        <div class="category-icon">🏠</div>
+        <div>Rooms</div>
+      </a>
+    </div>
     <div class="category-card">
       <a href="vehicles.html">
         <div class="category-icon">🚗</div>
@@ -205,41 +315,54 @@
         <div>Event Gear</div>
       </a>
     </div>
-      <div class="category-card">
-    <a href="rooms.html">
-      <div class="category-icon">🏠</div>
-      <div>Rooms & Hostels</div>
-    </a>
-  </div>
   </div>
 
- <div class="extras">
-  <h2>Sponsored Products Near You</h2>
-  <div class="sponsored-grid">
-    
-    <div class="sponsored-card">
-      <img src="https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg" alt="Hostel">
-      <p><strong>City Hostel Room</strong><br>₹1200/month · Dimapur</p>
-    </div>
-
-    <div class="sponsored-card">
-      <img src="https://images.pexels.com/photos/1484981/pexels-photo-1484981.jpeg" alt="Drill Machine">
-      <p><strong>Rose Home Stay</strong><br>₹150/day · Chumukedima</p>
-    </div>
-
-    <div class="sponsored-card">
-      <img src="https://images.pexels.com/photos/2393831/pexels-photo-2393831.jpeg" alt="Scooter">
-      <p><strong>Activa Scooter</strong><br>₹300/day · Kohima</p>
-    </div>
-
-    <div class="sponsored-card">
-      <img src="https://images.pexels.com/photos/244206/pexels-photo-244206.jpeg" alt="Camera">
-      <p><strong>Canon DSLR</strong><br>₹800/day · Imphal</p>
-    </div>
-
+  <div class="cta">
+    <button class="btn">List Your Product</button>
   </div>
-</div>
 
+  <div class="section">
+    <h2 class="section-title">Sponsored Products Near You</h2>
+    <div class="sponsored-grid">
+      <div class="sponsored-card">
+        <img src="https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg" alt="Hostel">
+        <div class="sponsored-card-content">
+          <strong>City Hostel Room</strong>
+          <p>₹1200/month · Dimapur</p>
+        </div>
+      </div>
+      <div class="sponsored-card">
+        <img src="https://images.pexels.com/photos/1484981/pexels-photo-1484981.jpeg" alt="Drill Machine">
+        <div class="sponsored-card-content">
+          <strong>Rose Home Stay</strong>
+          <p>₹150/day · Chumukedima</p>
+        </div>
+      </div>
+      <div class="sponsored-card">
+        <img src="https://images.pexels.com/photos/2393831/pexels-photo-2393831.jpeg" alt="Scooter">
+        <div class="sponsored-card-content">
+          <strong>Activa Scooter</strong>
+          <p>₹300/day · Kohima</p>
+        </div>
+      </div>
+      <div class="sponsored-card">
+        <img src="https://images.pexels.com/photos/244206/pexels-photo-244206.jpeg" alt="Camera">
+        <div class="sponsored-card-content">
+          <strong>Canon DSLR</strong>
+          <p>₹800/day · Imphal</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-section">
+    <h2>Find Your Perfect Stay</h2>
+    <p>Looking for a room near your college, workplace, or school?</p>
+    <p>Contact us — we'll arrange it for you. Sit back and relax!</p>
+    <div class="cta">
+      <button class="btn btn-outline">Contact Us</button>
+    </div>
+  </div>
 
   <footer>
     &copy; 2025 RentAll | Built for Local & Smart Access
