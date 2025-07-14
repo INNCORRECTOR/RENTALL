@@ -125,6 +125,31 @@
       color: #28a745;
     }
 
+    .sponsored-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.sponsored-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  text-align: center;
+}
+
+.sponsored-card img {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+
     footer {
       margin-top: 40px;
       padding: 20px;
@@ -177,23 +202,41 @@
         <div>Event Gear</div>
       </a>
     </div>
-    <div class="category-card">
-      <a href="professionals.html">
-        <div class="category-icon">💼</div>
-        <div>Professionals</div>
-      </a>
-    </div>
+      <div class="category-card">
+    <a href="rooms.html">
+      <div class="category-icon">🏠</div>
+      <div>Rooms & Hostels</div>
+    </a>
+  </div>
   </div>
 
-  <div class="extras">
-    <h2>Why Choose RentAll?</h2>
-    <ul>
-      <li>Wide range of categories for rent and services</li>
-      <li>Verified vendors and secure payments</li>
-      <li>Fast bookings with real-time support</li>
-      <li>No need to own — just rent what you need</li>
-    </ul>
+ <div class="extras">
+  <h2>Sponsored Products Near You</h2>
+  <div class="sponsored-grid">
+    
+    <div class="sponsored-card">
+      <img src="https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg" alt="Hostel">
+      <p><strong>City Hostel Room</strong><br>₹1200/month · Dimapur</p>
+    </div>
+
+    <div class="sponsored-card">
+      <img src="https://images.pexels.com/photos/1484981/pexels-photo-1484981.jpeg" alt="Drill Machine">
+      <p><strong>Electric Drill</strong><br>₹150/day · Pickup Only</p>
+    </div>
+
+    <div class="sponsored-card">
+      <img src="https://images.pexels.com/photos/2393831/pexels-photo-2393831.jpeg" alt="Scooter">
+      <p><strong>Activa Scooter</strong><br>₹300/day · Kohima</p>
+    </div>
+
+    <div class="sponsored-card">
+      <img src="https://images.pexels.com/photos/244206/pexels-photo-244206.jpeg" alt="Camera">
+      <p><strong>Canon DSLR</strong><br>₹800/day · Imphal</p>
+    </div>
+
   </div>
+</div>
+
 
   <footer>
     &copy; 2025 RentAll | Built for Local & Smart Access
